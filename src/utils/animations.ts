@@ -166,7 +166,7 @@ export const useGsapHeroTimeline = (scopeRef: React.RefObject<HTMLDivElement | H
     if (prefersReducedMotion()) return;
 
     const hasPreloaderRun = sessionStorage.getItem('preloader_done');
-    const initialDelay = hasPreloaderRun ? 0.2 : 3.8; // Wait for preloader on first visit, or 0.2s to prevent skipping
+    const initialDelay = hasPreloaderRun ? 0.2 : 2.0; // Wait for preloader on first visit, or 0.2s to prevent skipping
     if (!hasPreloaderRun) {
       sessionStorage.setItem('preloader_done', 'true');
     }
@@ -182,29 +182,29 @@ export const useGsapHeroTimeline = (scopeRef: React.RefObject<HTMLDivElement | H
     tl.to('.hero-bg', {
       scale: 1,
       opacity: 1,
-      duration: 1.2,
+      duration: 1.0,
     })
     .fromTo('.hero-letter', 
       { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, stagger: 0.02, ease: "power3.out" }, 
-      '-=0.8'
+      { y: 0, opacity: 1, duration: 0.3, stagger: 0.015, ease: "power3.out" }, 
+      '-=0.6'
     )
     .fromTo('.hero-heading-word .hero-word', 
       { y: 15, opacity: 0, filter: 'blur(8px)' },
-      { y: 0, opacity: 1, filter: 'blur(0px)', duration: 1.0, stagger: 0.3, ease: "power2.out" }, 
-      '-=0.6'
+      { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.7, stagger: 0.15, ease: "power2.out" }, 
+      '-=0.2'
     )
     .fromTo('.hero-subtitle-word .hero-word', 
       { y: 15, opacity: 0, filter: 'blur(8px)' },
-      { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.5, stagger: 0.03, ease: "power2.out" }, 
+      { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.4, stagger: 0.02, ease: "power2.out" }, 
       '-=0.4'
     )
     .to('.hero-anim', {
       y: 0,
       opacity: 1,
-      duration: 0.6,
+      duration: 0.4,
       stagger: 0.1,
-    }, '-=0.4'); 
+    }, '-=0.2'); 
   }, { scope: scopeRef });
 };
 

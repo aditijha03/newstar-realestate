@@ -142,13 +142,13 @@ const AboutHero: React.FC = () => (
       }}
     />
 
-    {/* Right side image */}
-    <div className="absolute right-0 top-0 bottom-0 hidden md:block md:w-1/2 lg:w-[58%]" style={{ overflow: 'hidden' }}>
+    {/* Background/Right side image */}
+    <div className="absolute right-0 top-0 bottom-0 w-full md:w-1/2 lg:w-[58%]" style={{ overflow: 'hidden' }}>
       <motion.img
         src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80"
         alt="Modern building exterior"
-        className="w-full object-cover"
-        style={{ opacity: 0.65, position: 'absolute', inset: 0, height: '100%', width: '100%', objectFit: 'cover', objectPosition: 'center' }}
+        className="w-full object-cover opacity-20 md:opacity-[0.65]"
+        style={{ position: 'absolute', inset: 0, height: '100%', width: '100%', objectFit: 'cover', objectPosition: 'center' }}
         initial={{ scale: 1.15 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1.6, ease: [0.25, 0.46, 0.45, 0.94] }}

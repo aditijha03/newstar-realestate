@@ -22,35 +22,35 @@ export const Preloader: React.FC = () => {
     // 1. Draw Star
     tl.fromTo(starRef.current, 
       { strokeDasharray: "100%", strokeDashoffset: "100%", fill: "rgba(201,168,76,0)" },
-      { strokeDashoffset: "0%", duration: 1.2, ease: "power2.inOut" }
+      { strokeDashoffset: "0%", duration: 0.8, ease: "power2.inOut" }
     ).to(starRef.current, {
-      fill: "rgba(201,168,76,1)", duration: 0.6, ease: "power2.in"
-    }, "-=0.3");
+      fill: "rgba(201,168,76,1)", duration: 0.4, ease: "power2.in"
+    }, "-=0.2");
 
     // 2. Reveal Letters
     if (titleContainerRef.current) {
       const letters = titleContainerRef.current.querySelectorAll('.letter');
       tl.fromTo(letters, 
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", stagger: 0.1 },
-        "-=0.6"
+        { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.05 },
+        "-=0.4"
       );
     }
 
     // 3. Reveal Subtitle
     tl.fromTo(subtitleRef.current,
       { opacity: 0, y: 10, filter: 'blur(8px)' },
-      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: "power2.out" },
-      "-=0.4"
+      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.6, ease: "power2.out" },
+      "-=0.3"
     );
 
     // 4. Slide Up Container
     tl.to(containerRef.current, {
       yPercent: -100,
       opacity: 0,
-      duration: 0.9,
+      duration: 0.6,
       ease: "power3.inOut",
-      delay: 0.5
+      delay: 0.2
     });
 
   }, { scope: containerRef });
