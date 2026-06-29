@@ -217,19 +217,20 @@ MobileMenu.displayName = 'MobileMenu';
 export const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
-  const [isDark, setIsDark] = React.useState(false);
+  const [isDark, setIsDark] = React.useState(() => {
+    return localStorage.getItem('theme') !== 'light';
+  });
   const [isScrolled, setIsScrolled] = React.useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
   React.useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (storedTheme === 'dark' || (!storedTheme && systemDark)) {
-      document.documentElement.classList.add('dark');
-      setIsDark(true);
-    } else {
+    if (storedTheme === 'light') {
       document.documentElement.classList.remove('dark');
       setIsDark(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      setIsDark(true);
     }
   }, []);
 

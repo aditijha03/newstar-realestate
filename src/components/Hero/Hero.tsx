@@ -77,9 +77,9 @@ export const Hero: React.FC = () => {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="relative flex items-center overflow-hidden min-h-[50vh] sm:min-h-[55vh] md:min-h-[65vh] lg:min-h-[75vh] mt-[3.5rem] lg:mt-0 pb-16">
+    <section ref={containerRef} className="relative flex items-center overflow-hidden min-h-[90svh] sm:min-h-[95svh] md:min-h-[95vh] lg:min-h-[100vh] mt-[3.5rem] lg:mt-0 pb-16">
       {/* Background */}
-      <div ref={bgRef} className="absolute inset-0 hero-bg" style={{ zIndex: 0, height: '130%', top: '-15%' }}>
+      <div ref={bgRef} className="absolute inset-0 hero-bg" style={{ zIndex: 0, height: '140vh', top: '-20vh', left: 0, right: 0 }}>
         <video
           autoPlay
           loop
@@ -88,6 +88,7 @@ export const Hero: React.FC = () => {
           preload="auto"
           poster="/hero-bg1.jpg"
           className="absolute top-0 left-0 w-full h-full object-cover"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         >
           <source src="/hero-video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
