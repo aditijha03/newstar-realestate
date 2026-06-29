@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://newstar-realestate.vercel.app/sitemap.xml
