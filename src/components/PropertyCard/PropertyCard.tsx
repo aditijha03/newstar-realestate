@@ -35,12 +35,10 @@ export const PropertyCard = React.memo<PropertyCardProps>(({ property, index = 0
         <img
           src={property.image}
           alt={`${property.title} — ${property.location}`}
-          className="w-full h-full object-cover"
-          style={{ opacity: imgLoaded ? 1 : 0 }}
+          className="block w-full h-full object-cover"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: imgLoaded ? 1 : 0 }}
           loading="lazy"
           decoding="async"
-          width={600}
-          height={400}
           onLoad={() => setImgLoaded(true)}
         />
 

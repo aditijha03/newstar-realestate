@@ -140,6 +140,13 @@ export const Hero: React.FC = () => {
           {/* Gold bar */}
           <div className="hero-anim hero-gold-bar" aria-hidden="true" />
 
+          {/* Mobile Static Coverage Title */}
+          <div className="block md:hidden mt-6 mb-2 text-right">
+            <span className="text-[#E6C97A] text-xs uppercase tracking-[0.15em] font-bold">
+              Our Coverage
+            </span>
+          </div>
+
           {/* Subtitle */}
           <p className="hero-subtitle">
             <SplitText type="word" text="Discover premium properties across Panvel, Navi Mumbai, Lonavala and Karjat with expert guidance and site visit assistance." className="hero-subtitle-word" />

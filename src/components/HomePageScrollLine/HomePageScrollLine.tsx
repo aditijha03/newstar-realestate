@@ -185,7 +185,7 @@ export const HomePageScrollLine: React.FC = () => {
           style={{ top: `${loc.top}%`, left: `${loc.left}%`, opacity: 0 }}
         >
           {loc.isTitle ? (
-            <div className={`absolute whitespace-nowrap -translate-y-1/2 ${loc.left >= 80 ? 'right-0 pr-2 sm:pr-4' : loc.left <= 20 ? 'left-0 pl-2 sm:pl-4' : '-translate-x-1/2'}`}>
+            <div className={`hidden md:block absolute whitespace-nowrap -translate-y-1/2 ${loc.left >= 80 ? 'right-0 pr-2 sm:pr-4' : loc.left <= 20 ? 'left-0 pl-2 sm:pl-4' : '-translate-x-1/2'}`}>
               <span className="text-[#E6C97A] text-xs sm:text-base uppercase tracking-[0.15em] sm:tracking-[0.25em] font-bold" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
                 {loc.name}
               </span>

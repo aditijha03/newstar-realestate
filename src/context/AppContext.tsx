@@ -24,6 +24,7 @@ interface AppContextValue {
   // Enquiry Actions
   addEnquiry: (enquiry: Omit<MockEnquiry, 'id' | 'date' | 'status'>) => Promise<boolean>;
   updateEnquiryStatus: (id: number | string, status: 'New' | 'Contacted' | 'Closed') => Promise<boolean>;
+  deleteEnquiry: (id: number | string) => Promise<boolean>;
   
   // Auth Actions
   adminLogin: (email: string, password: string) => Promise<boolean>;
@@ -44,6 +45,7 @@ const AppContext = createContext<AppContextValue>({
   deleteProperty: async () => false,
   addEnquiry: async () => false,
   updateEnquiryStatus: async () => false,
+  deleteEnquiry: async () => false,
   adminLogin: async () => false,
   adminLogout: () => {},
 });
@@ -104,9 +106,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const isAdminLoggedIn = !!adminToken;
 
-  // Add Axios Request Interceptor for Authentication
+  // Add Axios Interceptors for Authentication
   useEffect(() => {
-    const interceptor = axios.interceptors.request.use(
+    const requestInterceptor = axios.interceptors.request.use(
       (config) => {
         if (adminToken) {
           config.headers.Authorization = `Bearer ${adminToken}`;
@@ -118,8 +120,22 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     );
 
+    const responseInterceptor = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          setAdminToken(null);
+          setAdminUser(null);
+          localStorage.removeItem('newstar_admin_token');
+          localStorage.removeItem('newstar_admin_user');
+        }
+        return Promise.reject(error);
+      }
+    );
+
     return () => {
-      axios.interceptors.request.eject(interceptor);
+      axios.interceptors.request.eject(requestInterceptor);
+      axios.interceptors.response.eject(responseInterceptor);
     };
   }, [adminToken]);
 
@@ -326,6 +342,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  const deleteEnquiry = async (id: number | string): Promise<boolean> => {
+    try {
+      const response = await axios.delete(`/api/enquiries/admin/delete/${id}`);
+      if (response.data.success) {
+        await fetchEnquiries();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error deleting enquiry:', error);
+      return false;
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -342,6 +372,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         deleteProperty,
         addEnquiry,
         updateEnquiryStatus,
+        deleteEnquiry,
         adminLogin,
         adminLogout,
       }}

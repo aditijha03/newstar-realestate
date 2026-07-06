@@ -1,12 +1,22 @@
 import React from 'react';
 import { useApp } from '@/context/AppContext';
-import { Mail, Phone, Calendar, MessageSquare, Building, ChevronDown } from 'lucide-react';
+import { Mail, Phone, Calendar, MessageSquare, Building, ChevronDown, Trash2, AlertTriangle, X } from 'lucide-react';
 
 const GOLD = '#C9A84C';
 
 export const AdminEnquiries: React.FC = () => {
-  const { enquiries, properties, updateEnquiryStatus } = useApp();
+  const { enquiries, properties, updateEnquiryStatus, deleteEnquiry } = useApp();
   const [filterMode, setFilterMode] = React.useState<'All' | 'Property' | 'General'>('All');
+  const [enquiryToDelete, setEnquiryToDelete] = React.useState<string | number | null>(null);
+  const [isDeleting, setIsDeleting] = React.useState(false);
+
+  const confirmDelete = async () => {
+    if (!enquiryToDelete) return;
+    setIsDeleting(true);
+    await deleteEnquiry(enquiryToDelete);
+    setIsDeleting(false);
+    setEnquiryToDelete(null);
+  };
 
   const filteredEnquiries = React.useMemo(() => {
     return enquiries.filter(enq => {
@@ -121,7 +131,8 @@ export const AdminEnquiries: React.FC = () => {
                       {enq.message}
                     </td>
                     <td className="py-4 px-6 align-top">
-                      <div className="relative inline-block w-36">
+                      <div className="flex items-center gap-3">
+                        <div className="relative inline-block w-36">
                         <select
                           value={enq.status}
                           onChange={(e) => handleStatusChange(enq.id, e.target.value as any)}
@@ -138,6 +149,14 @@ export const AdminEnquiries: React.FC = () => {
                           <option value="Closed" className="bg-white text-slate-500 dark:bg-navy-900 dark:text-slate-300">Closed</option>
                         </select>
                         <ChevronDown className="w-3.5 h-3.5 absolute right-2.5 top-2.5 text-slate-400 pointer-events-none dark:text-navy-400" />
+                        </div>
+                        <button 
+                          onClick={() => setEnquiryToDelete(enq.id)}
+                          className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors dark:hover:bg-red-500/10" 
+                          title="Delete Enquiry"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -164,8 +183,9 @@ export const AdminEnquiries: React.FC = () => {
                     <span>{enq.date}</span>
                   </div>
                   
-                  {/* Status selector */}
-                  <div className="relative inline-block w-28">
+                  {/* Status selector & Delete */}
+                  <div className="flex items-center gap-2">
+                    <div className="relative inline-block w-28">
                     <select
                       value={enq.status}
                       onChange={(e) => handleStatusChange(enq.id, e.target.value as any)}
@@ -182,6 +202,14 @@ export const AdminEnquiries: React.FC = () => {
                       <option value="Closed" className="bg-white text-slate-500 dark:bg-navy-900 dark:text-slate-300">Closed</option>
                     </select>
                     <ChevronDown className="w-3 h-3 absolute right-1.5 top-2 text-slate-450 pointer-events-none dark:text-navy-400" />
+                    </div>
+                    <button 
+                      onClick={() => setEnquiryToDelete(enq.id)}
+                      className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors dark:hover:bg-red-500/10"
+                      title="Delete Enquiry"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
 
@@ -232,6 +260,38 @@ export const AdminEnquiries: React.FC = () => {
 
       </div>
 
+      {/* Delete Confirmation Modal */}
+      {enquiryToDelete && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm dark:bg-black/60">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm overflow-hidden animate-in fade-in zoom-in-95 duration-200 dark:bg-navy-900 border border-slate-100 dark:border-navy-800">
+            <div className="p-6">
+              <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4 dark:bg-red-500/20">
+                <AlertTriangle className="w-6 h-6 text-red-600 dark:text-red-500" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Delete Enquiry</h3>
+              <p className="text-sm text-slate-500 dark:text-navy-300">
+                Are you sure you want to delete this enquiry? This action cannot be undone.
+              </p>
+            </div>
+            <div className="bg-slate-50 p-4 flex gap-3 justify-end dark:bg-navy-950">
+              <button
+                onClick={() => setEnquiryToDelete(null)}
+                disabled={isDeleting}
+                className="px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-200 transition-colors dark:text-navy-200 dark:hover:bg-navy-800"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                disabled={isDeleting}
+                className="px-4 py-2 rounded-lg text-sm font-semibold bg-red-500 text-white hover:bg-red-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-70"
+              >
+                {isDeleting ? 'Deleting...' : 'Yes, Delete'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
