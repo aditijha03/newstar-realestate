@@ -31,7 +31,7 @@ app.use(helmet({
 
 // CORS Configuration
 app.use(cors({
-  origin: [CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://newstar-realestate.vercel.app'],
+  origin: [CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173', 'https://newstar-realestate.vercel.app', 'https://www.newstarrealestate.in', 'https://newstarrealestate.in'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
