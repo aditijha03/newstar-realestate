@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
 import { QUICK_LINKS, PROPERTY_LINKS, EMAIL, PHONE_NUMBER, PHONE_HREF, COMPANY_ADDRESS } from '@/utils/constants';
+import logoFooter from '../../assets/logo-footer.png';
 
 const GOLD = '#C9A84C';
 const GOLD_LIGHT = '#E6C97A';
@@ -73,12 +74,12 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <div className="flex items-center gap-2" style={{ marginBottom: '1rem' }}>
-              <Star className="w-8 h-8" style={{ color: GOLD, fill: GOLD, filter: 'drop-shadow(0 0 5px rgba(201, 168, 76, 0.45))' }} aria-hidden="true" />
-              <div className="flex flex-col leading-none">
-                <span style={{ color: 'var(--text-primary)', fontFamily: '"Playfair Display", serif', fontWeight: 700, fontSize: '1rem', letterSpacing: '0.1em', transition: 'color 0.3s' }}>NEW STAR</span>
-                <span style={{ color: GOLD_LIGHT, fontFamily: 'Inter, sans-serif', fontSize: '0.625rem', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase' }}>Real Estate</span>
-              </div>
+            <div className="flex items-center" style={{ marginBottom: '1rem' }}>
+              <img 
+                src={logoFooter} 
+                alt="New Star Real Estate" 
+                style={{ height: '112px', width: 'auto', maxWidth: '100%', objectFit: 'contain' }} 
+              />
             </div>
             <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '1.25rem', transition: 'color 0.3s' }}>
               Your trusted partner in finding premium residential and commercial properties. 10+ years of excellence.

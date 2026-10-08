@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Star, Sun, Moon, Phone } from 'lucide-react';
+import { Menu, X, Sun, Moon, Phone } from 'lucide-react';
 import { NAV_LINKS, PHONE_NUMBER, PHONE_HREF } from '@/utils/constants';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { AdminNavButton } from '@/pages/Admin/AdminPropertyUpload';
+import logoNav from '../../assets/logo-nav.png';
 
 const NAVY = '#0B1120';
 const GOLD = '#C9A84C';
@@ -12,28 +13,20 @@ const GOLD_LIGHT = '#E6C97A';
 
 const Logo = React.memo(({ isMobile, useLightText }: { isMobile: boolean; useLightText: boolean }) => (
   <Link to="/" className="flex items-center gap-2 flex-shrink-0" aria-label="New Star Real Estate Home" style={{ textDecoration: 'none' }}>
-    <Star className={isMobile ? 'w-8.5 h-8.5' : 'w-9 h-9'} style={{ color: GOLD, fill: GOLD, filter: 'drop-shadow(0 0 5px rgba(201, 168, 76, 0.45))' }} aria-hidden="true" />
-    <div className="flex flex-col leading-none">
-      <span 
-        style={{ 
-          color: useLightText ? '#FFFFFF' : '#0B1120',
-          textShadow: useLightText ? '0px 2px 4px rgba(0,0,0,0.5)' : 'none',
-          fontFamily: '"Playfair Display", serif', 
-          fontWeight: 700, 
-          fontSize: isMobile ? '1rem' : '1.25rem', 
-          letterSpacing: '0.1em',
-          transition: 'color 0.3s'
-        }}
-      >
-        NEW STAR
-      </span>
-      <span style={{ color: useLightText ? GOLD_LIGHT : GOLD, fontFamily: 'Inter, sans-serif', fontSize: isMobile ? '0.55rem' : '0.625rem', fontWeight: 600, letterSpacing: '0.18em', textTransform: 'uppercase', transition: 'color 0.3s' }}>
-        Real Estate
-      </span>
-    </div>
+    <img 
+      src={logoNav} 
+      alt="New Star Real Estate" 
+      style={{ 
+        height: isMobile ? '52px' : '80px', 
+        width: 'auto', 
+        maxWidth: '350px',
+        objectFit: 'contain' 
+      }} 
+    />
   </Link>
 ));
 Logo.displayName = 'Logo';
+
 
 const NavLink = React.memo(({ href, label, useLightText }: { href: string; label: string; useLightText: boolean }) => {
   const location = useLocation();
@@ -306,7 +299,7 @@ export const Navbar: React.FC = () => {
         role="banner"
       >
         <div className="w-full px-4 lg:px-6">
-          <div className="flex items-center justify-between" style={{ height: isMobile ? '3.5rem' : '4.5rem', transition: 'height 300ms' }}>
+          <div className="flex items-center justify-between" style={{ height: isMobile ? '4.5rem' : '6rem', transition: 'height 300ms' }}>
             
             <Logo isMobile={isMobile} useLightText={useLightText} />
 
